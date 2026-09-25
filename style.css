@@ -1,57 +1,17 @@
-*{
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-
-:root {
---text-color: white;
-  --bg-url: url(./assets/bg-mobile.jpg);
-  --bg-color: #121214;
---stroke-color: rgba(255, 255, 255, 0.5);
-  --surface-color: rgba(255, 255, 255, 0.05);
-  --surface-color-hover: rgba(0, 0, 0, 0.02);
-  --surface-color: rgba(255, 255, 255, 0.1);
-  --surface-color-hover: rgba(0, 0, 0, 0.05);
---highlight-color: rgba(255, 255, 255, 0.2);
-  --switch-btn-color: white;
---switch-bg-url: url(./assets/moon-stars.svg);
-}
-
-.light {
---text-color: black;
-  --bg-url: url(./assets/bg-mobile-light.jpg);
-  --bg-color: #f0f0f0;
---stroke-color: rgba(0, 0, 0, 0.5);
---surface-color: rgba(0, 0, 0, 0.05);
---surface-color-hover: rgba(0, 0, 0, 0.02);
---highlight-color: rgba(0, 0, 0, 0.1);
-  --switch-btn-color: black;
---switch-bg-url: url(./assets/sun.svg);
-}
-
-body {
-  background: var(--bg-url) no-repeat top center/cover;
-  background-color: var(--bg-color);
+background-color: var(--bg-color);
 height: 100vh;
-  transition: background-color 0.3s;
+transition: background-color 0.3s;
+  overflow-x: hidden;
 }
 
 body * {
-font-family: 'Inter', sans-serif;
-color: var(--text-color);
-}
-
-#corner-icon {
-  position: absolute;
-  top: 120px;
-  right: 15%;
-  width: 150px;
-  height: 150px;
+@@ -43,17 +44,40 @@ body * {
+right: 15%;
+width: 150px;
+height: 150px;
   background: url(./assets/moon-stars.svg) no-repeat center/contain;
   opacity: 0.8;
-  z-index: 0;
+z-index: 0;
   /* Filtro que força a lua a ficar 100% branca no modo escuro */
   filter: brightness(0) invert(1); 
 }
@@ -60,110 +20,42 @@ color: var(--text-color);
   background: url(./assets/sun.svg) no-repeat center/contain;
   /* Remove o filtro no modo claro para o sol manter a cor natural */
   filter: none; 
+.moon, .sun {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.moon {
+  background-image: url(./assets/moon-stars.svg);
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+  transform: translateY(0);
+}
+
+.sun {
+  background-image: url(./assets/sun.svg);
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.light .moon {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.light .sun {
+  opacity: 0.8;
+  transform: translateY(0);
 }
 
 @media (max-width: 700px) {
   #corner-icon {
-    display: none;
+    width: 100px;
+    height: 100px;
   }
-}
-
-#container {
-width: 100%;
-max-width: 588px;
-margin: 56px auto 0px;
-padding: 0 24px;
-  position: relative;
-  z-index: 1;
-}
-
-#profile {
-@@ -48,6 +78,9 @@ body * {
-
-#profile img {
-width: 112px;
-  height: 112px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-#profile p {
-@@ -56,6 +89,46 @@ body * {
-margin-top: 8px;
-}
-
-#switch {
-  position: relative;
-  width: 64px;
-  margin: 4px auto;
-  cursor: pointer;
-}
-
-#switch button {
-  width: 32px;
-  height: 32px;
-  background: white var(--switch-bg-url) no-repeat center;
-  border: 0;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  z-index: 1;
-  transform: translateY(-50%);
-  animation: slideBack 0.2s;
-}
-
-.light #switch button {
-  animation: slideForwards 0.2s forwards;
-}
-
-#switch button:hover {
-  outline: 8px solid var(--highlight-color);
-}
-
-#switch span {
-  display: block;
-  width: 64px;
-  height: 24px;
-  background: var(--surface-color);
-  border: 1px solid var(--stroke-color);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border-radius: 9999px;
-}
-
-ul {
-list-style: none;
-display: flex;
-@@ -84,16 +157,6 @@ ul li a:hover {
-border: 1.5px solid var(--text-color);
-}
-
-@media (min-width: 700px) {
-  :root {
-    --bg-url: url(./assets/bg-desktop.jpg);
-  }
-
-  .light {
-    --bg-url: url(./assets/bg-desktop-light.jpg);
-  }
-}
-
-#social-links {
-display: flex;
-justify-content: center;
-@@ -118,4 +181,14 @@ footer {
-padding: 24px 0;
-text-align: center;
-font-size: 14px;
-}
-
-@keyframes slideForwards {
-  from { left: 0; }
-  to { left: 50%; }
-}
-
-@keyframes slideBack {
-  from { left: 50%; }
-  to { left: 0; }
 }
